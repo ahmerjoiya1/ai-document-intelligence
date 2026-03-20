@@ -1,6 +1,9 @@
 from app.services.pdf_loader import extract_text_from_pdf
 
-text = extract_text_from_pdf("sample.pdf")
+data = extract_text_from_pdf("sample.pdf")
 
-print("PDF text extracted successfully:\n")
-print(text[:2000])
+print("Structured output:\n")
+
+for page_data in data:
+    print(page_data)
+    print("-" * 80)

@@ -1,12 +1,8 @@
 from pypdf import PdfReader
+from app.services.text_processor import structure_text_by_page
 
-def extract_text_from_pdf(file_path: str) -> str:
+
+def extract_text_from_pdf(file_path: str):
     reader = PdfReader(file_path)
-    text = ""
-
-    for page in reader.pages:
-        page_text = page.extract_text()
-        if page_text:
-            text += page_text + "\n"
-
-    return text
+    structured_data = structure_text_by_page(reader, file_path)
+    return structured_data
