@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-
+#/ye command .env file ko load karti hai taake os.getenv() usko read kar sake/
 load_dotenv()
 
 
