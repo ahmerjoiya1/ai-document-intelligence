@@ -11,7 +11,6 @@ def clean_text(text: str) -> str:
     text = text.replace("ﬂ", "fl")
     text = text.replace("ﬃ", "ffi")
     text = text.replace("ﬄ", "ffl")
-    
 
     # Remove excessive spaces/tabs
     text = re.sub(r"[ \t]+", " ", text)
@@ -42,3 +41,44 @@ def structure_text_by_page(reader, filename: str):
         )
 
     return structured_data
+
+
+def split_into_sentences(text: str):
+    return re.split(r"(?<=[.!?])\s+|\n+", text)
+
+
+def chunk_text(text: str, chunk_size: int = 300, overlap_words: int = 10):
+    text = clean_text(text)
+    sentences = split_into_sentences(text)
+
+    chunks = []
+    current_chunk = ""
+
+    for sentence in sentences:
+        sentence = sentence.strip()
+        if not sentence:
+            continue
+
+        if len(current_chunk) + len(sentence) + 1 <= chunk_size:
+            if current_chunk:
+                current_chunk += " " + sentence
+            else:
+                current_chunk = sentence
+        else:
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+            current_chunk = sentence
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+
+    overlapped_chunks = []
+    for i, chunk in enumerate(chunks):
+        if i == 0:
+            overlapped_chunks.append(chunk)
+        else:
+            prev_words = chunks[i - 1].split()
+            overlap_text = " ".join(prev_words[-overlap_words:])
+            overlapped_chunks.append((overlap_text + " " + chunk).strip())
+
+    return overlapped_chunks

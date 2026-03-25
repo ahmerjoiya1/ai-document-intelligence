@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 import shutil
 import os
+from app.services.text_processor import chunk_text
 
 from app.config import settings
 from app.services.pdf_loader import extract_text_from_pdf
@@ -29,8 +30,18 @@ def upload_pdf(file: UploadFile = File(...)):
     # Extract structured data
     data = extract_text_from_pdf(file_path)
 
+    all_chunks = []
+
+    for page in data:
+        chunks = chunk_text(page["text"])
+        all_chunks.append({
+            "page": page["page"],
+            "chunks": chunks
+        })
+
     return {
         "filename": file.filename,
         "total_pages": len(data),
-        "preview": data[:1]  # first page only
+        "preview": data[:1],
+        "chunks": all_chunks
     }
