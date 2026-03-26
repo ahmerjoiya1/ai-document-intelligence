@@ -47,7 +47,14 @@ def split_into_sentences(text: str):
     return re.split(r"(?<=[.!?])\s+|\n+", text)
 
 
-def chunk_text(text: str, chunk_size: int = 300, overlap_words: int = 10):
+def chunk_text(
+    text: str,
+    chunk_size: int = 300,
+    overlap_words: int = 10,
+    source: str = "unknown.pdf",
+    page: int | None = None,
+    start_chunk_id: int = 0,
+):
     text = clean_text(text)
     sentences = split_into_sentences(text)
 
@@ -81,4 +88,15 @@ def chunk_text(text: str, chunk_size: int = 300, overlap_words: int = 10):
             overlap_text = " ".join(prev_words[-overlap_words:])
             overlapped_chunks.append((overlap_text + " " + chunk).strip())
 
-    return overlapped_chunks
+    structured_chunks = []
+    for i, chunk in enumerate(overlapped_chunks):
+        structured_chunks.append(
+            {
+                "chunk_id": start_chunk_id + i,
+                "text": chunk,
+                "source": source,
+                "page": page,
+            }
+        )
+
+    return structured_chunks

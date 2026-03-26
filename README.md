@@ -10,6 +10,8 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Day 2: PDF text extraction pipeline implemented
 - Day 3: Structured output with page-wise extraction via API
 - Day 4: Text chunking with overlap for AI-ready processing
+- Day 5: Text embeddings generation using SentenceTransformers
+- Day 6: Vector database integration (FAISS) for semantic search
 
 ---
 
@@ -21,8 +23,15 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Chunking of text into smaller segments
 - Context-preserving overlap between chunks
 - FastAPI backend with interactive Swagger UI
+- Embeddings generation for semantic understanding
+- Vector database (FAISS) integration  
+- Semantic search using similarity matching 
 
 ---
+## How It Works
+
+```bash
+PDF → Text Extraction → Chunking → Embeddings → FAISS Index → Semantic Search
 
 ## Run Locally
 

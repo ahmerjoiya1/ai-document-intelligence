@@ -15,5 +15,14 @@ def generate_embeddings(chunks: list[str]):
         return []
 
     model = get_model()
-    embeddings = model.encode(chunks)
+    embeddings = model.encode(chunks, convert_to_numpy=True)
     return embeddings.tolist()
+
+
+def generate_query_embedding(query: str):
+    if not query or not query.strip():
+        return []
+
+    model = get_model()
+    embedding = model.encode([query], convert_to_numpy=True)[0]
+    return embedding.tolist()
