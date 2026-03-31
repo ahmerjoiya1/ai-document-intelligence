@@ -8,6 +8,8 @@ from app.services.pdf_loader import extract_text_from_pdf
 from app.services.text_processor import chunk_text
 from app.services.embedding_service import generate_embeddings, generate_query_embedding
 from app.services.vector_store import FAISSVectorStore
+from app.services.retriever import retrieve_relevant_chunks
+from app.services.llm_service import generate_answer
 
 app = FastAPI(title=settings.APP_NAME)
 
@@ -98,6 +100,9 @@ class SearchRequest(BaseModel):
     query: str
     top_k: int = 3
 
+class AskRequest(BaseModel):
+    query: str
+    top_k: int = 3
 
 @app.post("/search")
 def search(request: SearchRequest):
@@ -109,3 +114,31 @@ def search(request: SearchRequest):
         "query": request.query,
         "results": results
     }
+
+@app.post("/ask")
+def ask(request: AskRequest):
+    try:
+        retrieved_results = retrieve_relevant_chunks(
+            query=request.query,
+            top_k=request.top_k
+        )
+
+        answer = generate_answer(
+            query=request.query,
+            retrieved_results=retrieved_results
+        )
+
+        return {
+            "query": request.query,
+            "answer": answer,
+            "sources": [
+                {
+                    "chunk_id": item["metadata"].get("chunk_id"),
+                    "page": item["metadata"].get("page"),
+                    "source": item["metadata"].get("source")
+                }
+                for item in retrieved_results
+            ]
+        }
+    except Exception as e:
+        return {"error": str(e)}
