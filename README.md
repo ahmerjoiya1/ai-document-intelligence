@@ -14,6 +14,9 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Day 6: Vector database integration (FAISS) for semantic search
 - Day 7: Semantic search with query embedding and similarity-based retrieval
 - Day 8 & 9: Question-answering pipeline with `/ask` endpoint and source attribution
+- Day 10: LLM integration using Hugging Face Inference Providers (RAG pipeline)
+- Day 11: Response optimization with prompt engineering and clean formatting  
+- Day 12: End-to-end testing, validation, and system refinement  
 
 ---
 
@@ -31,13 +34,22 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Query-based document retrieval  
 - Question answering using retrieved document context  
 - Source attribution (page number + file reference)
+- Interactive API testing via Swagger UI
+- Fallback mechanism if LLM fails
 ---
 ## How It Works
 
 ```bash
 PDF → Text Extraction → Chunking → Embeddings → FAISS Index → Semantic Search → Answer Generation
 
-## Run Locally
-
-```bash
+▶️ Run Locally
+1. Clone the repo
+git clone <https://github.com/ahmerjoiya1/ai-document-intelligence>
+2. Install dependencies
+pip install -r requirements.txt
+3. Set Hugging Face Token
+export HF_TOKEN=<your_token_here>
+4. Run server
 uvicorn app.main:app --reload
+5. Open Swagger UI
+http://127.0.0.1:8000/docs

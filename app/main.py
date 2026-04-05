@@ -123,22 +123,16 @@ def ask(request: AskRequest):
             top_k=request.top_k
         )
 
-        answer = generate_answer(
+        response = generate_answer(
             query=request.query,
             retrieved_results=retrieved_results
         )
 
         return {
             "query": request.query,
-            "answer": answer,
-            "sources": [
-                {
-                    "chunk_id": item["metadata"].get("chunk_id"),
-                    "page": item["metadata"].get("page"),
-                    "source": item["metadata"].get("source")
-                }
-                for item in retrieved_results
-            ]
+            "answer": response["answer"],
+            "sources": response["sources"]
         }
+
     except Exception as e:
         return {"error": str(e)}
