@@ -16,7 +16,8 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Day 8 & 9: Question-answering pipeline with `/ask` endpoint and source attribution
 - Day 10: LLM integration using Hugging Face Inference Providers (RAG pipeline)
 - Day 11: Response optimization with prompt engineering and clean formatting  
-- Day 12: End-to-end testing, validation, and system refinement  
+- Day 12: End-to-end testing, validation, and system refinement 
+- Day 15: Streamlit frontend UI skeleton created with sidebar upload section and chat input layout 
 
 ---
 
@@ -36,11 +37,22 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Source attribution (page number + file reference)
 - Interactive API testing via Swagger UI
 - Fallback mechanism if LLM fails
+- Basic Streamlit frontend setup
+- Frontend sidebar for PDF upload
+- Chat style input interface in UI
+- Clean two-panel layout for demo preparation
+- Separated backend (FastAPI) and frontend (Streamlit) project structure
 ---
 ## How It Works
 
 ```bash
 PDF → Text Extraction → Chunking → Embeddings → FAISS Index → Semantic Search → Answer Generation
+
+Architecture
+Frontend: Streamlit UI
+Backend: FastAPI
+Retrieval Layer: FAISS + SentenceTransformers
+Generation Layer: Hugging Face Inference Providers
 
 ▶️ Run Locally
 1. Clone the repo
@@ -53,3 +65,5 @@ export HF_TOKEN=<your_token_here>
 uvicorn app.main:app --reload
 5. Open Swagger UI
 http://127.0.0.1:8000/docs
+6. Run Streamlit UI
+streamlit run .\frontend\streamlit_app.py
