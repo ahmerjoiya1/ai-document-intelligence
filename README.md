@@ -17,7 +17,7 @@ A production-style document processing and Q&A system built with FastAPI, evolvi
 - Day 10: LLM integration using Hugging Face Inference Providers (RAG pipeline)
 - Day 11: Response optimization with prompt engineering and clean formatting  
 - Day 12: End-to-end testing, validation, and system refinement 
-- Day 15: Streamlit frontend UI skeleton created with sidebar upload section and chat input layout 
+- Day 13: Streamlit frontend UI skeleton created with sidebar upload section and chat input layout 
 
 ---
 
