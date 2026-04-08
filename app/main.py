@@ -130,9 +130,14 @@ def ask(request: AskRequest):
 
         return {
             "query": request.query,
-            "answer": response["answer"],
-            "sources": response["sources"]
+            "answer": response.get("answer", "No answer generated."),
+            "sources": response.get("sources", [])
         }
 
     except Exception as e:
-        return {"error": str(e)}
+        return {
+            "query": request.query,
+            "answer": "An error occurred while generating the answer.",
+            "sources": [],
+            "error": str(e)
+        }
